@@ -8,17 +8,67 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(135deg, #000000 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
             min-height: 100vh;
+            transition: all 0.5s ease;
+        }
+        
+        /* Temas Dinâmicos */
+        body.tema-manha {
+            background: linear-gradient(135deg, #FFE082 0%, #FFCC02 25%, #FF8F00 50%, #E65100 75%, #BF360C 100%);
+            color: #1A1A1A;
+        }
+        body.tema-tarde {
+            background: linear-gradient(135deg, #81C784 0%, #4CAF50 25%, #2E7D32 50%, #1B5E20 75%, #0D47A1 100%);
+            color: white;
+        }
+        body.tema-noite {
+            background: linear-gradient(135deg, #5C6BC0 0%, #3F51B5 25%, #303F9F 50%, #1A237E 75%, #000051 100%);
+            color: white;
+        }
+        body.tema-madrugada {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            color: white;
+        }
+        body.tema-claro {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 25%, #90CAF9 50%, #64B5F6 75%, #42A5F5 100%);
+            color: #1A1A1A;
+        }
+        body.tema-escuro {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
             color: white;
         }
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         .header { 
-            background: linear-gradient(135deg, #000000 0%, #16213e 50%, #533483 100%);
-            color: white; 
             padding: 20px 0; 
             margin-bottom: 30px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: all 0.5s ease;
+        }
+        
+        /* Headers por tema */
+        body.tema-manha .header {
+            background: linear-gradient(135deg, #FF8F00 0%, #E65100 50%, #BF360C 100%);
+            color: white;
+        }
+        body.tema-tarde .header {
+            background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 50%, #0D47A1 100%);
+            color: white;
+        }
+        body.tema-noite .header {
+            background: linear-gradient(135deg, #303F9F 0%, #1A237E 50%, #000051 100%);
+            color: white;
+        }
+        body.tema-madrugada .header {
+            background: linear-gradient(135deg, #000000 0%, #16213e 50%, #533483 100%);
+            color: white;
+        }
+        body.tema-claro .header {
+            background: linear-gradient(135deg, #90CAF9 0%, #64B5F6 50%, #42A5F5 100%);
+            color: #1A1A1A;
+        }
+        body.tema-escuro .header {
+            background: linear-gradient(135deg, #000000 0%, #16213e 50%, #533483 100%);
+            color: white;
         }
         .header-content { display: flex; justify-content: space-between; align-items: center; }
         .logo { 
@@ -27,12 +77,49 @@
             font-weight: 900;
             font-style: italic;
             letter-spacing: 2px;
-            background: linear-gradient(135deg, #00d4ff, #9c27b0);
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent;
             animation: logoBreath 6s ease-in-out infinite;
             transition: all 0.3s ease;
             cursor: pointer;
+        }
+        
+        /* Logo por tema */
+        body.tema-manha .logo {
+            background: linear-gradient(135deg, #D84315, #8D6E63);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        body.tema-tarde .logo {
+            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        body.tema-noite .logo {
+            background: linear-gradient(135deg, #E1F5FE, #B3E5FC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        body.tema-madrugada .logo {
+            background: linear-gradient(135deg, #00d4ff, #9c27b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        body.tema-claro .logo {
+            background: linear-gradient(135deg, #0D47A1, #4A148C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        body.tema-escuro .logo {
+            background: linear-gradient(135deg, #00d4ff, #9c27b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         .logo:hover { 
             transform: scale(1.05);
@@ -91,15 +178,40 @@
             box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
         }
         .card { 
-            background: rgba(255,255,255,0.1); 
             padding: 25px; 
             border-radius: 15px; 
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
             margin-bottom: 20px;
             animation: slideInUp 0.6s ease-out;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
+        }
+        
+        /* Cards por tema */
+        body.tema-manha .card {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        body.tema-tarde .card {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        body.tema-noite .card {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        body.tema-madrugada .card {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        body.tema-claro .card {
+            background: rgba(255,255,255,0.8);
+            border: 1px solid rgba(0,0,0,0.1);
+            color: #1A1A1A;
+        }
+        body.tema-escuro .card {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .card:hover {
             transform: translateY(-5px);
@@ -155,15 +267,39 @@
         }
         .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
         .stat-card { 
-            background: rgba(255,255,255,0.1); 
             padding: 25px; 
             border-radius: 15px; 
             text-align: center; 
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
             animation: fadeInScale 0.8s ease-out;
             transition: all 0.3s ease;
+        }
+        
+        /* Stat cards por tema */
+        body.tema-manha .stat-card {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        body.tema-tarde .stat-card {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        body.tema-noite .stat-card {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        body.tema-madrugada .stat-card {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        body.tema-claro .stat-card {
+            background: rgba(255,255,255,0.8);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        body.tema-escuro .stat-card {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .stat-card:hover {
             transform: translateY(-8px) scale(1.02);
@@ -193,7 +329,24 @@
             50% { transform: scale(1.05); }
         }
         .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #e0e0e0; }
+        .form-group label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 600; 
+            transition: color 0.3s ease;
+        }
+        
+        /* Labels por tema */
+        body.tema-claro .form-group label,
+        body.tema-manha .form-group label {
+            color: #1A1A1A;
+        }
+        body.tema-tarde .form-group label,
+        body.tema-noite .form-group label,
+        body.tema-madrugada .form-group label,
+        body.tema-escuro .form-group label {
+            color: #e0e0e0;
+        }
         .form-group input, .form-group textarea, .form-group select { 
             width: 100%; 
             padding: 12px; 
@@ -212,6 +365,30 @@
             background: #2b2b2b;
             color: white;
             padding: 10px;
+        }
+        
+        /* Forms para tema claro */
+        body.tema-claro .form-group input,
+        body.tema-claro .form-group textarea,
+        body.tema-claro .form-group select {
+            background: rgba(255,255,255,0.9);
+            color: #1A1A1A;
+            border: 1px solid rgba(0,0,0,0.2);
+        }
+        body.tema-claro .form-group select option {
+            background: white;
+            color: #1A1A1A;
+        }
+        body.tema-manha .form-group input,
+        body.tema-manha .form-group textarea,
+        body.tema-manha .form-group select {
+            background: rgba(255,255,255,0.3);
+            color: #1A1A1A;
+            border: 1px solid rgba(0,0,0,0.2);
+        }
+        body.tema-manha .form-group select option {
+            background: #FFF8E1;
+            color: #1A1A1A;
         }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             outline: none;
@@ -288,7 +465,41 @@
         .task-item.concluida { opacity: 0.6; }
         .task-actions { margin-top: 15px; }
         .task-actions a { margin-right: 10px; }
-        h1, h2, h3, h4 { color: white; }
+        h1, h2, h3, h4 { 
+            transition: color 0.3s ease;
+        }
+        
+        /* Títulos para tema claro e manhã */
+        body.tema-claro h1,
+        body.tema-claro h2,
+        body.tema-claro h3,
+        body.tema-claro h4 {
+            color: #1A1A1A;
+        }
+        body.tema-manha h1,
+        body.tema-manha h2,
+        body.tema-manha h3,
+        body.tema-manha h4 {
+            color: #1A1A1A;
+        }
+        body.tema-tarde h1,
+        body.tema-tarde h2,
+        body.tema-tarde h3,
+        body.tema-tarde h4,
+        body.tema-noite h1,
+        body.tema-noite h2,
+        body.tema-noite h3,
+        body.tema-noite h4,
+        body.tema-madrugada h1,
+        body.tema-madrugada h2,
+        body.tema-madrugada h3,
+        body.tema-madrugada h4,
+        body.tema-escuro h1,
+        body.tema-escuro h2,
+        body.tema-escuro h3,
+        body.tema-escuro h4 {
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -296,15 +507,20 @@
         <div class="container">
             <div class="header-content">
                 <div>
-                    <div class="logo">PRIORIZZE</div>
+                    <a href="/" style="text-decoration: none;">
+                        <div class="logo">PRIORIZZE</div>
+                    </a>
                     <nav class="nav">
                         <a href="/">Dashboard</a>
                         <a href="/tarefas">Tarefas</a>
                         <a href="/nova_tarefa">Nova Tarefa</a>
+                        <a href="/configuracoes">Configurações</a>
                     </nav>
                 </div>
                 <div>
-                    <img src="https://d0.awsstatic.com/logos/powered-by-aws-white.png" alt="AWS" class="aws-logo">
+                    <a href="https://aws.amazon.com" target="_blank" rel="noopener noreferrer">
+                        <img src="https://d0.awsstatic.com/logos/powered-by-aws-white.png" alt="AWS" class="aws-logo">
+                    </a>
                 </div>
             </div>
         </div>
@@ -313,5 +529,22 @@
     <div class="container">
         {% block content %}{% endblock %}
     </div>
+    
+    <script>
+    // Aplicar tema dinâmico
+    function aplicarTema() {
+        fetch('/api/tema')
+            .then(response => response.json())
+            .then(data => {
+                document.body.className = 'tema-' + data.tema;
+            });
+    }
+    
+    // Aplicar tema ao carregar
+    aplicarTema();
+    
+    // Atualizar tema a cada 5 minutos
+    setInterval(aplicarTema, 300000);
+    </script>
 </body>
 </html>

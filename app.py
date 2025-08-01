@@ -21,6 +21,19 @@ def init_db():
             data_conclusao TIMESTAMP
         )
     ''')
+    
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS configuracoes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            tema_dinamico INTEGER DEFAULT 1,
+            tema_fixo TEXT DEFAULT 'escuro'
+        )
+    ''')
+    
+    # Inserir configuração padrão se não existir
+    if conn.execute('SELECT COUNT(*) FROM configuracoes').fetchone()[0] == 0:
+        conn.execute('INSERT INTO configuracoes (tema_dinamico, tema_fixo) VALUES (1, "escuro")')
+    
     conn.commit()
     conn.close()
 
@@ -43,7 +56,8 @@ def dashboard():
     ''').fetchall()
     
     conn.close()
-    return render_template('dashboard.html', stats=stats, tarefas=tarefas)
+    tema_atual = get_tema_atual()
+    return render_template('dashboard.html', stats=stats, tarefas=tarefas, tema=tema_atual)
 
 @app.route('/tarefas')
 def listar_tarefas():
@@ -95,6 +109,27 @@ def deletar_tarefa(id):
     conn.close()
     return redirect(url_for('listar_tarefas'))
 
+@app.route('/configuracoes', methods=['GET', 'POST'])
+def configuracoes():
+    conn = sqlite3.connect('tarefas.db')
+    
+    if request.method == 'POST':
+        tema_dinamico = 1 if request.form.get('tema_dinamico') else 0
+        tema_fixo = request.form['tema_fixo']
+        
+        conn.execute('''
+            UPDATE configuracoes 
+            SET tema_dinamico = ?, tema_fixo = ?
+            WHERE id = 1
+        ''', (tema_dinamico, tema_fixo))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('configuracoes'))
+    
+    config = conn.execute('SELECT * FROM configuracoes WHERE id = 1').fetchone()
+    conn.close()
+    return render_template('configuracoes.html', config=config)
+
 @app.route('/api/stats')
 def api_stats():
     conn = sqlite3.connect('tarefas.db')
@@ -108,6 +143,49 @@ def api_stats():
     
     conn.close()
     return jsonify(stats)
+
+@app.route('/api/tema')
+def api_tema():
+    conn = sqlite3.connect('tarefas.db')
+    config = conn.execute('SELECT * FROM configuracoes WHERE id = 1').fetchone()
+    conn.close()
+    
+    if config and config[1]:  # tema_dinamico ativo
+        from datetime import datetime
+        hora = datetime.now().hour
+        
+        if 6 <= hora < 12:
+            tema = 'manha'
+        elif 12 <= hora < 18:
+            tema = 'tarde'
+        elif 18 <= hora < 22:
+            tema = 'noite'
+        else:
+            tema = 'madrugada'
+    else:
+        tema = config[2] if config else 'escuro'
+    
+    return jsonify({'tema': tema})
+
+def get_tema_atual():
+    conn = sqlite3.connect('tarefas.db')
+    config = conn.execute('SELECT * FROM configuracoes WHERE id = 1').fetchone()
+    conn.close()
+    
+    if config and config[1]:  # tema_dinamico ativo
+        from datetime import datetime
+        hora = datetime.now().hour
+        
+        if 6 <= hora < 12:
+            return 'manha'
+        elif 12 <= hora < 18:
+            return 'tarde'
+        elif 18 <= hora < 22:
+            return 'noite'
+        else:
+            return 'madrugada'
+    else:
+        return config[2] if config else 'escuro'
 
 if __name__ == '__main__':
     init_db()

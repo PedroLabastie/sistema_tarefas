@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+
+{% block title %}Configurações - Priorizze{% endblock %}
+
+{% block content %}
+<style>
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+.checkbox-container:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-2px);
+    z-index: 2;
+}
+.custom-checkbox {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.custom-checkbox.checked {
+    background: linear-gradient(45deg, #00d4ff, #9c27b0);
+}
+.custom-checkbox::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.custom-checkbox.checked::after {
+    transform: translateX(30px);
+}
+.checkbox-text {
+    flex: 1;
+    z-index: 10;
+    position: relative;
+}
+.checkbox-text strong {
+    font-size: 1.2em;
+    display: block;
+    margin-bottom: 5px;
+    z-index: 10;
+    position: relative;
+}
+/* Cores específicas para texto em diferentes temas */
+body.tema-manha .checkbox-text,
+body.tema-manha .checkbox-text strong,
+body.tema-manha .checkbox-text div,
+body.tema-manha .checkbox-text small {
+    color: #1A1A1A !important;
+}
+body.tema-claro .checkbox-text,
+body.tema-claro .checkbox-text strong,
+body.tema-claro .checkbox-text div,
+body.tema-claro .checkbox-text small {
+    color: #1A1A1A !important;
+}
+body.tema-tarde .checkbox-text,
+body.tema-tarde .checkbox-text strong,
+body.tema-tarde .checkbox-text div,
+body.tema-tarde .checkbox-text small,
+body.tema-noite .checkbox-text,
+body.tema-noite .checkbox-text strong,
+body.tema-noite .checkbox-text div,
+body.tema-noite .checkbox-text small,
+body.tema-madrugada .checkbox-text,
+body.tema-madrugada .checkbox-text strong,
+body.tema-madrugada .checkbox-text div,
+body.tema-madrugada .checkbox-text small,
+body.tema-escuro .checkbox-text,
+body.tema-escuro .checkbox-text strong,
+body.tema-escuro .checkbox-text div,
+body.tema-escuro .checkbox-text small {
+    color: white !important;
+}
+.theme-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+.theme-preview {
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+.theme-preview:hover {
+    transform: scale(1.02);
+    z-index: 1;
+}
+.theme-preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+    z-index: -1;
+}
+.theme-preview:hover::before {
+    left: 100%;
+}
+</style>
+
+<h2 style="z-index: 100; position: relative;">⚙️ Configurações</h2>
+
+<div class="card">
+    <h3 style="margin-bottom: 25px;">🎨 Configurações de Tema</h3>
+    
+    <form method="POST">
+        <div class="checkbox-container">
+            <div class="custom-checkbox {% if config[1] %}checked{% endif %}" onclick="toggleCheckbox()" id="checkboxToggle">
+                <input type="checkbox" name="tema_dinamico" {% if config[1] %}checked{% endif %} style="display: none;" id="temaDinamico">
+            </div>
+            <div class="checkbox-text">
+                <strong>🌟 Tema Dinâmico</strong>
+                <div style="opacity: 0.9; font-size: 0.9em;">
+                    Muda automaticamente baseado na hora do dia<br>
+                    <small style="opacity: 0.7;">
+                        🌅 Manhã (6h-12h) • ☀️ Tarde (12h-18h) • 🌆 Noite (18h-22h) • 🌙 Madrugada (22h-6h)
+                    </small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="tema_fixo">🎯 Tema Fixo (quando dinâmico estiver desabilitado):</label>
+            <select id="tema_fixo" name="tema_fixo">
+                <option value="escuro" {% if config[2] == 'escuro' %}selected{% endif %}>🌙 Escuro</option>
+                <option value="claro" {% if config[2] == 'claro' %}selected{% endif %}>☀️ Claro</option>
+                <option value="manha" {% if config[2] == 'manha' %}selected{% endif %}>🌅 Manhã</option>
+                <option value="tarde" {% if config[2] == 'tarde' %}selected{% endif %}>🌞 Tarde</option>
+                <option value="noite" {% if config[2] == 'noite' %}selected{% endif %}>🌆 Noite</option>
+                <option value="madrugada" {% if config[2] == 'madrugada' %}selected{% endif %}>🌙 Madrugada</option>
+            </select>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <button type="submit" class="btn btn-primary">💾 Salvar Configurações</button>
+            <a href="/" class="btn" style="background: #666; color: white; margin-left: 10px;">↩️ Voltar</a>
+        </div>
+    </form>
+</div>
+
+<div class="card">
+    <h3 style="margin-bottom: 20px;">ℹ️ Preview dos Temas</h3>
+    <div class="theme-preview-grid">
+        <div class="theme-preview" style="background: linear-gradient(135deg, #FFE082, #E65100);">
+            🌅 Manhã<br>
+            <small>Energético</small>
+        </div>
+        <div class="theme-preview" style="background: linear-gradient(135deg, #81C784, #1B5E20);">
+            🌞 Tarde<br>
+            <small>Produtivo</small>
+        </div>
+        <div class="theme-preview" style="background: linear-gradient(135deg, #5C6BC0, #000051);">
+            🌆 Noite<br>
+            <small>Relaxante</small>
+        </div>
+        <div class="theme-preview" style="background: linear-gradient(135deg, #000000, #533483);">
+            🌙 Madrugada<br>
+            <small>Concentrado</small>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleCheckbox() {
+    const checkbox = document.getElementById('temaDinamico');
+    const toggle = document.getElementById('checkboxToggle');
+    
+    checkbox.checked = !checkbox.checked;
+    
+    if (checkbox.checked) {
+        toggle.classList.add('checked');
+        fetch('/api/tema')
+            .then(response => response.json())
+            .then(data => {
+                document.body.className = 'tema-' + data.tema;
+            });
+    } else {
+        toggle.classList.remove('checked');
+        const temaFixo = document.getElementById('tema_fixo').value;
+        document.body.className = 'tema-' + temaFixo;
+    }
+}
+
+// Preview do tema em tempo real
+document.getElementById('tema_fixo').addEventListener('change', function() {
+    if (!document.getElementById('temaDinamico').checked) {
+        document.body.className = 'tema-' + this.value;
+    }
+});
+</script>
+{% endblock %}
