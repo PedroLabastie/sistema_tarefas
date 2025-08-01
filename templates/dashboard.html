@@ -24,10 +24,16 @@
     <h3>Tarefas Recentes</h3>
     {% if tarefas %}
         {% for tarefa in tarefas %}
-        <div class="task-item {{ tarefa[4] }} {{ tarefa[3] }}" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
+        <div class="task-item cor-{{ tarefa[5] }} {{ tarefa[4] }} {{ tarefa[3] }}" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
             <h4>{{ tarefa[1] }}</h4>
             <p>{{ tarefa[2] }}</p>
-            <small>Criada em: {{ tarefa[5] }} | Prioridade: {{ tarefa[4] }} | Status: {{ tarefa[3] }}</small>
+            {% if tarefa[6] or tarefa[7] %}
+            <div class="task-date-time">
+                {% if tarefa[6] %}<span>📅 {{ tarefa[6] }}</span>{% endif %}
+                {% if tarefa[7] %}<span>🕰️ {{ tarefa[7] }}</span>{% endif %}
+            </div>
+            {% endif %}
+            <small>Criada: {{ tarefa[8] }} | Prioridade: {{ tarefa[4] }} | Status: {{ tarefa[3] }}</small>
         </div>
         {% endfor %}
     {% else %}

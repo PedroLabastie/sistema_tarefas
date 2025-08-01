@@ -11,14 +11,20 @@
 <div class="card">
     {% if tarefas %}
         {% for tarefa in tarefas %}
-        <div class="task-item {{ tarefa[4] }} {{ tarefa[3] }}" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
+        <div class="task-item cor-{{ tarefa[5] }} {{ tarefa[4] }} {{ tarefa[3] }}" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
             <h4>{{ tarefa[1] }}</h4>
             <p>{{ tarefa[2] }}</p>
+            {% if tarefa[6] or tarefa[7] %}
+            <div class="task-date-time">
+                {% if tarefa[6] %}<span>📅 {{ tarefa[6] }}</span>{% endif %}
+                {% if tarefa[7] %}<span>🕰️ {{ tarefa[7] }}</span>{% endif %}
+            </div>
+            {% endif %}
             <small>
-                Criada: {{ tarefa[5] }} | 
+                Criada: {{ tarefa[8] }} | 
                 Prioridade: {{ tarefa[4] }} | 
                 Status: {{ tarefa[3] }}
-                {% if tarefa[6] %} | Concluída: {{ tarefa[6] }}{% endif %}
+                {% if tarefa[9] %} | Concluída: {{ tarefa[9] }}{% endif %}
             </small>
             
             <div class="task-actions">

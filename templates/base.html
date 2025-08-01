@@ -204,12 +204,36 @@
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
+        .form-group select {
+            background: rgba(0,0,0,0.3);
+            color: white;
+        }
+        .form-group select option {
+            background: #2b2b2b;
+            color: white;
+            padding: 10px;
+        }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             outline: none;
             border-color: #00d4ff;
             background: rgba(255,255,255,0.15);
             box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
             transform: scale(1.02);
+        }
+        .color-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        .form-row .form-group {
+            flex: 1;
         }
         .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.6); }
         .task-item { 
@@ -227,6 +251,26 @@
             transform: translateX(10px);
             background: rgba(255,255,255,0.15);
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .task-item.cor-azul { border-left-color: #2196F3; }
+        .task-item.cor-verde { border-left-color: #4CAF50; }
+        .task-item.cor-vermelho { border-left-color: #F44336; }
+        .task-item.cor-roxo { border-left-color: #9C27B0; }
+        .task-item.cor-laranja { border-left-color: #FF9800; }
+        .task-item.cor-rosa { border-left-color: #E91E63; }
+        .task-item.cor-amarelo { border-left-color: #FFEB3B; }
+        .task-item.cor-ciano { border-left-color: #00BCD4; }
+        .task-date-time {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        .task-date-time span {
+            background: rgba(255,255,255,0.1);
+            padding: 4px 8px;
+            border-radius: 12px;
         }
         @keyframes slideInLeft {
             from {

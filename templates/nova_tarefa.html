@@ -17,17 +17,64 @@
             <textarea id="descricao" name="descricao" rows="4"></textarea>
         </div>
         
-        <div class="form-group">
-            <label for="prioridade">Prioridade:</label>
-            <select id="prioridade" name="prioridade">
-                <option value="baixa">Baixa</option>
-                <option value="media" selected>Média</option>
-                <option value="alta">Alta</option>
-            </select>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="prioridade">Prioridade:</label>
+                <select id="prioridade" name="prioridade">
+                    <option value="baixa">Baixa</option>
+                    <option value="media" selected>Média</option>
+                    <option value="alta">Alta</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="cor">Cor:</label>
+                <select id="cor" name="cor" onchange="updateColorPreview()">
+                    <option value="azul" selected>Azul</option>
+                    <option value="verde">Verde</option>
+                    <option value="vermelho">Vermelho</option>
+                    <option value="roxo">Roxo</option>
+                    <option value="laranja">Laranja</option>
+                    <option value="rosa">Rosa</option>
+                    <option value="amarelo">Amarelo</option>
+                    <option value="ciano">Ciano</option>
+                </select>
+                <div class="color-preview" id="colorPreview" style="background: #2196F3;"></div>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="data_vencimento">Data de Vencimento (opcional):</label>
+                <input type="date" id="data_vencimento" name="data_vencimento">
+            </div>
+            
+            <div class="form-group">
+                <label for="hora_vencimento">Horário (opcional):</label>
+                <input type="time" id="hora_vencimento" name="hora_vencimento">
+            </div>
         </div>
         
         <button type="submit" class="btn btn-primary">Criar Tarefa</button>
         <a href="/tarefas" class="btn" style="background: #666; color: white; margin-left: 10px;">Cancelar</a>
     </form>
 </div>
+
+<script>
+function updateColorPreview() {
+    const select = document.getElementById('cor');
+    const preview = document.getElementById('colorPreview');
+    const colors = {
+        'azul': '#2196F3',
+        'verde': '#4CAF50',
+        'vermelho': '#F44336',
+        'roxo': '#9C27B0',
+        'laranja': '#FF9800',
+        'rosa': '#E91E63',
+        'amarelo': '#FFEB3B',
+        'ciano': '#00BCD4'
+    };
+    preview.style.background = colors[select.value];
+}
+</script>
 {% endblock %}

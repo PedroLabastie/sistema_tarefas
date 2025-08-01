@@ -14,6 +14,9 @@ def init_db():
             descricao TEXT,
             status TEXT DEFAULT 'pendente',
             prioridade TEXT DEFAULT 'media',
+            cor TEXT DEFAULT 'azul',
+            data_vencimento DATE,
+            hora_vencimento TIME,
             data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             data_conclusao TIMESTAMP
         )
@@ -56,12 +59,15 @@ def nova_tarefa():
         titulo = request.form['titulo']
         descricao = request.form['descricao']
         prioridade = request.form['prioridade']
+        cor = request.form['cor']
+        data_vencimento = request.form['data_vencimento'] if request.form['data_vencimento'] else None
+        hora_vencimento = request.form['hora_vencimento'] if request.form['hora_vencimento'] else None
         
         conn = sqlite3.connect('tarefas.db')
         conn.execute('''
-            INSERT INTO tarefas (titulo, descricao, prioridade)
-            VALUES (?, ?, ?)
-        ''', (titulo, descricao, prioridade))
+            INSERT INTO tarefas (titulo, descricao, prioridade, cor, data_vencimento, hora_vencimento)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (titulo, descricao, prioridade, cor, data_vencimento, hora_vencimento))
         conn.commit()
         conn.close()
         
