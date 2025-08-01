@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Priorizze{% endblock %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<div class="stats">
+    <div class="stat-card" style="animation-delay: 0.2s;">
+        <div class="stat-number">{{ stats.total }}</div>
+        <div>Total de Tarefas</div>
+    </div>
+    <div class="stat-card" style="animation-delay: 0.4s;">
+        <div class="stat-number">{{ stats.pendentes }}</div>
+        <div>Pendentes</div>
+    </div>
+    <div class="stat-card" style="animation-delay: 0.6s;">
+        <div class="stat-number">{{ stats.concluidas }}</div>
+        <div>Concluídas</div>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Tarefas Recentes</h3>
+    {% if tarefas %}
+        {% for tarefa in tarefas %}
+        <div class="task-item {{ tarefa[4] }} {{ tarefa[3] }}" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
+            <h4>{{ tarefa[1] }}</h4>
+            <p>{{ tarefa[2] }}</p>
+            <small>Criada em: {{ tarefa[5] }} | Prioridade: {{ tarefa[4] }} | Status: {{ tarefa[3] }}</small>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhuma tarefa encontrada.</p>
+    {% endif %}
+</div>
+
+<script>
+// Atualizar stats a cada 30 segundos
+setInterval(function() {
+    fetch('/api/stats')
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('.stat-card:nth-child(1) .stat-number').textContent = data.total;
+            document.querySelector('.stat-card:nth-child(2) .stat-number').textContent = data.pendentes;
+            document.querySelector('.stat-card:nth-child(3) .stat-number').textContent = data.concluidas;
+        });
+}, 30000);
+</script>
+{% endblock %}

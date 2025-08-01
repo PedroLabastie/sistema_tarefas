@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Tarefas - Priorizze{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2>Todas as Tarefas</h2>
+    <a href="/nova_tarefa" class="btn btn-primary">Nova Tarefa</a>
+</div>
+
+<div class="card">
+    {% if tarefas %}
+        {% for tarefa in tarefas %}
+        <div class="task-item {{ tarefa[4] }} {{ tarefa[3] }}" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
+            <h4>{{ tarefa[1] }}</h4>
+            <p>{{ tarefa[2] }}</p>
+            <small>
+                Criada: {{ tarefa[5] }} | 
+                Prioridade: {{ tarefa[4] }} | 
+                Status: {{ tarefa[3] }}
+                {% if tarefa[6] %} | Concluída: {{ tarefa[6] }}{% endif %}
+            </small>
+            
+            <div class="task-actions">
+                {% if tarefa[3] == 'pendente' %}
+                    <a href="/concluir/{{ tarefa[0] }}" class="btn btn-success">Concluir</a>
+                {% endif %}
+                <a href="/deletar/{{ tarefa[0] }}" class="btn btn-danger" 
+                   onclick="return confirm('Tem certeza que deseja deletar esta tarefa?')">Deletar</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhuma tarefa encontrada. <a href="/nova_tarefa">Criar primeira tarefa</a></p>
+    {% endif %}
+</div>
+{% endblock %}
